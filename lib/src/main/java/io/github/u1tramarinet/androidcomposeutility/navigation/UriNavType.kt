@@ -8,6 +8,7 @@ import io.github.u1tramarinet.androidcomposeutility.navigation.json.JsonParser
 import io.github.u1tramarinet.androidcomposeutility.navigation.uri.MoshiUriJsonParser
 import java.io.IOException
 
+@Suppress("unused")
 class UriNavType(private val parser: JsonParser<Uri> = MoshiUriJsonParser()) :
     NavType<Uri>(isNullableAllowed = false) {
     override fun get(bundle: Bundle, key: String): Uri? {
