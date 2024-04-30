@@ -4,20 +4,24 @@ import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 
+@Suppress("unused")
 enum class Orientation(private val value: Int) {
     PORTRAIT(value = Configuration.ORIENTATION_PORTRAIT),
     LANDSCAPE(value = Configuration.ORIENTATION_LANDSCAPE),
     ;
 
+    fun toggle() = if (this == PORTRAIT) LANDSCAPE else PORTRAIT
+
     companion object {
-        private val defaultValue = PORTRAIT
+        @Suppress("MemberVisibilityCanBePrivate")
+        fun defaultValue() = PORTRAIT
         fun from(value: Int): Orientation {
             return try {
                 Orientation.entries.first {
                     it.value == value
                 }
             } catch (_: NoSuchElementException) {
-                defaultValue
+                defaultValue()
             }
         }
     }
