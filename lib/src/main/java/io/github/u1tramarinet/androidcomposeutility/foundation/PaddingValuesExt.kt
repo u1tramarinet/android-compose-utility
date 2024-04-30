@@ -1,4 +1,4 @@
-package io.github.u1tramarinet.androidcomposeutility
+package io.github.u1tramarinet.androidcomposeutility.foundation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
