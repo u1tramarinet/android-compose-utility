@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 
 @Suppress("unused")
-enum class Orientation(private val value: Int) {
+enum class Orientation(val value: Int) {
     PORTRAIT(value = Configuration.ORIENTATION_PORTRAIT),
     LANDSCAPE(value = Configuration.ORIENTATION_LANDSCAPE),
     ;
