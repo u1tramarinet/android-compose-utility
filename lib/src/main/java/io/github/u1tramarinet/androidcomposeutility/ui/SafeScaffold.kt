@@ -12,6 +12,10 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
 @Suppress("unused")
@@ -25,13 +29,10 @@ fun SafeScaffold(
     floatingActionButtonPosition: FabPosition = FabPosition.End,
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(backgroundColor = containerColor),
+    contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     content: @Composable (PaddingValues) -> Unit
 ) {
-    val contentWindowInsets =
-        ScaffoldDefaults.contentWindowInsets
-            .overlap(paddingValues = WindowInsets.safeContent.asPaddingValues())
-            .overlap(paddingValues = contentPadding)
     Scaffold(
         modifier = modifier,
         topBar = topBar,
@@ -42,6 +43,36 @@ fun SafeScaffold(
         containerColor = containerColor,
         contentColor = contentColor,
         contentWindowInsets = contentWindowInsets,
-        content = content
+        content = { innerPadding ->
+            content(
+                calculateSafeContentPadding(
+                    originalContentPadding = innerPadding,
+                    userContentPadding = contentPadding,
+                )
+            )
+        }
     )
 }
+
+@Composable
+private fun calculateSafeContentPadding(
+    density: Density = LocalDensity.current,
+    layoutDirection: LayoutDirection = LocalLayoutDirection.current,
+    safeContent: WindowInsets = WindowInsets.safeContent,
+    originalContentPadding: PaddingValues,
+    userContentPadding: PaddingValues
+) = WindowInsets(
+    left = max(
+        safeContent.getLeft(density, layoutDirection).dp,
+        userContentPadding.calculateLeftPadding(layoutDirection)
+    ),
+    top = originalContentPadding.calculateTopPadding() + userContentPadding.calculateTopPadding(),
+    right = max(
+        safeContent.getRight(density, layoutDirection).dp,
+        userContentPadding.calculateRightPadding(layoutDirection)
+    ),
+    bottom = max(
+        safeContent.getBottom(density).dp,
+        originalContentPadding.calculateBottomPadding() + userContentPadding.calculateBottomPadding()
+    ),
+).asPaddingValues()

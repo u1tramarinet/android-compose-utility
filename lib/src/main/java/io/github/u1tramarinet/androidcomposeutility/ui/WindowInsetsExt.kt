@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
+@Suppress("unused")
 @Composable
 fun WindowInsets.copy(
     density: Density = LocalDensity.current,
@@ -38,4 +39,4 @@ fun WindowInsets.overlap(
     bottom = max(this.getBottom(density).dp, paddingValues.calculateBottomPadding())
 )
 
-private fun max(a: Dp, b: Dp) = if (a.value >= b.value) a else b
+fun max(a: Dp, b: Dp) = if (a.value >= b.value) a else b
