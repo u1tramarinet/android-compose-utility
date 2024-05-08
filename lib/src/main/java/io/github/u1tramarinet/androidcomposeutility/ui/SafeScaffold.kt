@@ -1,6 +1,9 @@
 package io.github.u1tramarinet.androidcomposeutility.ui
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -25,12 +28,10 @@ fun SafeScaffold(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     content: @Composable (PaddingValues) -> Unit
 ) {
-    val contentWindowInsets = if (getOrientation() == Orientation.PORTRAIT) {
-        ScaffoldDefaults.contentWindowInsets.overlap(paddingValues = contentPadding)
-    } else {
-        ScaffoldDefaults.contentWindowInsets.copy(left = 0.dp, right = 0.dp)
+    val contentWindowInsets =
+        ScaffoldDefaults.contentWindowInsets
+            .overlap(paddingValues = WindowInsets.safeContent.asPaddingValues())
             .overlap(paddingValues = contentPadding)
-    }
     Scaffold(
         modifier = modifier,
         topBar = topBar,
