@@ -1,5 +1,6 @@
 package io.github.u1tramarinet.androidcomposeutility.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -61,18 +62,33 @@ private fun calculateSafeContentPadding(
     safeContent: WindowInsets = WindowInsets.safeContent,
     originalContentPadding: PaddingValues,
     userContentPadding: PaddingValues
-) = WindowInsets(
-    left = max(
+): PaddingValues {
+    val left = max(
         safeContent.getLeft(density, layoutDirection).dp,
         userContentPadding.calculateLeftPadding(layoutDirection)
-    ),
-    top = originalContentPadding.calculateTopPadding() + userContentPadding.calculateTopPadding(),
-    right = max(
+    )
+    Log.d("calculateSafeContentPadding", "left=$left")
+    val top =
+        originalContentPadding.calculateTopPadding() + userContentPadding.calculateTopPadding()
+    Log.d(
+        "calculateSafeContentPadding",
+        "top=$top (${originalContentPadding.calculateTopPadding()} + " +
+                "${userContentPadding.calculateTopPadding()})"
+    )
+    val right = max(
         safeContent.getRight(density, layoutDirection).dp,
         userContentPadding.calculateRightPadding(layoutDirection)
-    ),
-    bottom = max(
+    )
+    Log.d("calculateSafeContentPadding", "right=$right")
+    val bottom = max(
         safeContent.getBottom(density).dp,
         originalContentPadding.calculateBottomPadding() + userContentPadding.calculateBottomPadding()
-    ),
-).asPaddingValues()
+    )
+    Log.d(
+        "calculateSafeContentPadding",
+        "bottom=$bottom (b=${originalContentPadding.calculateBottomPadding()} + " +
+                "${userContentPadding.calculateBottomPadding()})"
+    )
+    return WindowInsets(left = left, top = top, right = right, bottom = bottom)
+        .asPaddingValues()
+}

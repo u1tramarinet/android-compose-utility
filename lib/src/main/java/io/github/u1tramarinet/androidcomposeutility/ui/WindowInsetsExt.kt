@@ -1,5 +1,6 @@
 package io.github.u1tramarinet.androidcomposeutility.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.runtime.Composable
@@ -39,4 +40,10 @@ fun WindowInsets.overlap(
     bottom = max(this.getBottom(density).dp, paddingValues.calculateBottomPadding())
 )
 
-fun max(a: Dp, b: Dp) = if (a.value >= b.value) a else b
+fun max(a: Dp, b: Dp) = if (a.value >= b.value) {
+    Log.d("max", "$a >= $b")
+    a
+} else {
+    Log.d("max", "$a < $b")
+    b
+}
