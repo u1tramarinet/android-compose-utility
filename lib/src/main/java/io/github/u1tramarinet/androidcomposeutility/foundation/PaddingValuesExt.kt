@@ -34,3 +34,17 @@ fun PaddingValues.copy(
     end = end,
     bottom = bottom,
 )
+
+@Composable
+fun PaddingValues.map(
+    layoutDirection: LayoutDirection = LocalLayoutDirection.current,
+    start: Dp = calculateStartPadding(layoutDirection),
+    top: Dp = calculateTopPadding(),
+    end: Dp = calculateEndPadding(layoutDirection),
+    bottom: Dp = calculateBottomPadding(),
+) = PaddingValues(
+    start = max(start, calculateStartPadding(layoutDirection)),
+    top = max(top, calculateTopPadding()),
+    end = max(end, calculateEndPadding(layoutDirection)),
+    bottom = max(bottom, calculateBottomPadding()),
+)
