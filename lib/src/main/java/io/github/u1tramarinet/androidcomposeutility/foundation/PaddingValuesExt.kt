@@ -48,3 +48,26 @@ fun PaddingValues.max(
     end = max(end, calculateEndPadding(layoutDirection)),
     bottom = max(bottom, calculateBottomPadding()),
 )
+
+@Composable
+fun PaddingValues.max(
+    layoutDirection: LayoutDirection = LocalLayoutDirection.current,
+    all: Dp,
+) = PaddingValues(
+    start = max(all, calculateStartPadding(layoutDirection)),
+    top = max(all, calculateTopPadding()),
+    end = max(all, calculateEndPadding(layoutDirection)),
+    bottom = max(all, calculateBottomPadding()),
+)
+
+@Composable
+fun PaddingValues.max(
+    layoutDirection: LayoutDirection = LocalLayoutDirection.current,
+    vertical: Dp,
+    horizontal: Dp,
+) = PaddingValues(
+    start = max(horizontal, calculateStartPadding(layoutDirection)),
+    top = max(vertical, calculateTopPadding()),
+    end = max(horizontal, calculateEndPadding(layoutDirection)),
+    bottom = max(vertical, calculateBottomPadding()),
+)
